@@ -12,13 +12,14 @@ import mongoose = require('mongoose');
 import logger from '../logger/index'
 
 let options = {
-     useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useCreateIndex: true,
-  useFindAndModify:false
+  useNewUrlParser: true,
+	useUnifiedTopology: true,
+	useCreateIndex: true,
+	useFindAndModify: false
+
 }
 let startMongo = () => {
-  mongoose.connect('mongodb+srv://zidane:<eAvhUZ8kHeGWRTk>@cluster0.js9x7.mongodb.net/novia?retryWrites=true&w=majority',options)
+  mongoose.connect('mongodb://127.0.0.1:27017/novia',options);
   const connection = mongoose.connection;
     return connection;
 }
