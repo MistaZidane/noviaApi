@@ -9,11 +9,14 @@
  */
 
 
-import productsRoute from './courseRoute';
-
+import courseRoutes from './courseRoute';
+import lecturerRoutes from './lecturersRoute';
+import campusRoutes from './campusRoute'
  
 export default {
 
-    productsRoute,
-   
+    courseRoutes,
+    lecturerRoutes,
+    campusRoutes
+      
 }

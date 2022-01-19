@@ -13,11 +13,11 @@ import mongoose = require("mongoose");
 import paginator = require("mongoose-paginate-v2");
 
 const Schema = mongoose.Schema;
-const CourseSchema = new Schema({
-    title: { type: String, unique: true, require: true },
-    description: { type: String, default: '' },
+const CampusSchema = new Schema({
+    name: { type: String, unique: true, require: true },
+    classes: [],
     
 });
 
-CourseSchema.plugin(paginator);
-export default mongoose.model('courses', CourseSchema);
+CampusSchema.plugin(paginator);
+export default mongoose.model('campus', CampusSchema);

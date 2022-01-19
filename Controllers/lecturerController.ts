@@ -15,15 +15,15 @@ import messages from "../messages/messages";
 
 import path from "path"
 import mongoosePaginate = require('mongoose-paginate-v2');
-import courseModel from "../models/courseModel";
+import lecturerModel from "../Models/lecturerModel";
 /**
  * 
  * used to create a course
  *  @param req - request object
  *  @param res - response object
  */
-const createCourse = (req: any, res: any) => {
-    courseModel.create(req.body).then((data) => {
+const createLecturer = (req: any, res: any) => {
+    lecturerModel.create(req.body).then((data) => {
         res.status(response.CREATED_201);
         res.json({
             success: true,
@@ -47,13 +47,13 @@ const createCourse = (req: any, res: any) => {
  *  @param res - response object
  */
 // 603eb2ee77259abd63745b4d
-const getCourses = (req: any, res: any) => {
+const getLecturers = (req: any, res: any) => {
     const options = {
         page: req.query.page ? req.query.page : 1,
         limit: req.query.limit ? req.query.limit : 10,
     };
     
-    courseModel.find((err,data)=>{
+    lecturerModel.find((err,data)=>{
       if(!err){
                  console.log(data)
             res.status(response.OK_200);
@@ -83,14 +83,14 @@ const getCourses = (req: any, res: any) => {
  *  @param res - response object
  */
 // 603eb2ee77259abd63745b4d
-const getCoursesById = (req: any, res: any) => {
+const getLecturerById = (req: any, res: any) => {
   let id = req.params.id ? req.params.id : '';
   const options = {
       page: req.query.page ? req.query.page : 1,
       limit: req.query.limit ? req.query.limit : 10,
   };
   
-  courseModel.findById(id,(err,data)=>{
+  lecturerModel.findById(id,(err,data)=>{
     if(!err){
                console.log(data)
           res.status(response.OK_200);
@@ -117,11 +117,11 @@ const getCoursesById = (req: any, res: any) => {
  *  @param req - request object
  *  @param res - response object
  */
-const updateACourse = (req: any, res: any) => {
+const updateALecturer = (req: any, res: any) => {
     let id = req.params.id ? req.params.id : '';
 
     let updateData = req.body;
-    courseModel.findOneAndUpdate({ _id: id}, updateData, { new: true }, (err, doc) => {
+    lecturerModel.findOneAndUpdate({ _id: id}, updateData, { new: true }, (err, doc) => {
         if (err) {
             res.status(response.BAD_REQUEST_400);
             res.json({
@@ -141,10 +141,11 @@ const updateACourse = (req: any, res: any) => {
 };
 
 
+
 export default {
-  getCourses,
-  getCoursesById,
-  createCourse,
-  updateACourse
+  getLecturers,
+  getLecturerById,
+  createLecturer,
+  updateALecturer
 };
 

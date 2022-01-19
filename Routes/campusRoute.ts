@@ -18,9 +18,9 @@ import controller from "../controllers";
 
 const router = express.Router();
 
-router.get("/courses/", controller.getCoursesController);
-router.get("/courses/:id", controller.getCoursesByIdController);
-router.post("/courses/", controller.createCourseControler);
-router.patch("/courses/:id", controller.updateCourseController);
+router.get("/campus/", controller.getCampusesController);
+router.get("/campus/:id", controller.getCampusByIdController);
+router.post("/campus/", controller.createCampusControler);
+router.patch("/campus/:id", controller.updatecampusController);
 
 export default router;
