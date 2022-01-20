@@ -14,13 +14,18 @@ import lecturerRoutes from './lecturersRoute';
 import campusRoutes from './campusRoute';
 import departmentRoutes from './departmentRoute';
 import tableRoutes from './timeTableRoutes';
- 
+import unassignedRoutes from './unassignedRoute';
+import seatingRoute from  './seatingRoute';
+ import logRoute from './logRoute';
 export default {
 
     courseRoutes,
     lecturerRoutes,
     campusRoutes,
     departmentRoutes,
-    tableRoutes
+    tableRoutes,
+    unassignedRoutes,
+    seatingRoute,
+    logRoute
       
 }

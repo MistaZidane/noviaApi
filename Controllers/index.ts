@@ -15,6 +15,9 @@ import * as lecturerController from "./lecturerController";
 import * as campusController from "./campusController";
 import * as departmentController from "./departmentsController";
 import * as TimeTableController from "./timeTableController";
+import * as unassignedController from "./unassignedController";
+import * as seatingController from "./seatingController";
+import logsController from "./logsController";
 
 export default {
     // for courses
@@ -47,6 +50,22 @@ export default {
   getTimeTableByIdController: TimeTableController.default.getTimeTableById,
   createTimeTableControler: TimeTableController.default.createTimeTable,
   updateTimeTableController: TimeTableController.default.updateATimeTable,
-  deleteTimeTableController: TimeTableController.default.deleteTimeTable 
-   
+  deleteTimeTableController: TimeTableController.default.deleteTimeTable, 
+   // for unassigned
+  getUnassignedController: unassignedController.default.getUnassigned,
+  getUnassignedByIdController: unassignedController.default.getUnassignedById,
+  createUnassignedControler: unassignedController.default.createUnassigned,
+  updateUnassignedController: unassignedController.default.updateUnassigned,
+  deleteUnassignedController: unassignedController.default.deleteUnassigned, 
+
+
+   // for seating
+   getSeatingController: seatingController.default.getSeating,
+   getSeatingByIdController: seatingController.default.getSeatingById,
+   createSeatingControler: seatingController.default.createSeating,
+   updateSeatingController: seatingController.default.updateSeating,
+   deleteSeatingController: seatingController.default.deleteSeating, 
+
+   // logs
+   getLogController: logsController.getLogs
 }
