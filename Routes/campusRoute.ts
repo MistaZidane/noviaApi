@@ -2,7 +2,7 @@
  * Author: Ntokungwia Zidane
  * Contributors: 
  *
- * Project: Bato Store API
+ * Project: 
  * This is used to boot up our API
  * Created on Tuesday Jan 18 2022
 
@@ -22,5 +22,6 @@ router.get("/campus/", controller.getCampusesController);
 router.get("/campus/:id", controller.getCampusByIdController);
 router.post("/campus/", controller.createCampusControler);
 router.patch("/campus/:id", controller.updatecampusController);
+router.delete("/campus/:id", controller.deleteCampusController);
 
 export default router;

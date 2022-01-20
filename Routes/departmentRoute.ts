@@ -18,10 +18,10 @@ import controller from "../controllers";
 
 const router = express.Router();
 
-router.get("/lecturer/", controller.getLecturersController);
-router.get("/lecturer/:id", controller.getLecturerByIdController);
-router.post("/lecturer/", controller.createLecturerControler);
-router.patch("/lecturer/:id", controller.updateLecturerController);
-router.delete("/lecturer/:id", controller.deleteLecturerController);
+router.get("/department/", controller.getDepartmentController);
+router.get("/department/:id", controller.getDepartmentByIdController);
+router.post("/department/", controller.createDepartmentControler);
+router.patch("/department/:id", controller.updatedepartmentController);
+router.delete("/department/:id", controller.deleteDepartmentController)
 
 export default router;

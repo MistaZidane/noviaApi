@@ -2,7 +2,7 @@
  * Author: Ntokungwia Zidane
  * Contributors: 
  *
- * Project: Bato Store API
+ * Project: 
  * This is used to boot up our API
  * Created on Tuesday Jan 18 2022
 
@@ -139,12 +139,46 @@ const updateACourse = (req: any, res: any) => {
         }
     })
 };
+/**
+ * 
+ * used to delete a course
+ *  @param req - request object
+ *  @param res - response object
+ */
+ const deletecourse = (req: any, res: any) => {
+  // setting the id of the course if passed to {id}
+  let id = req.params.id ? req.params.id : '';
+ 
+  // deleting the course where {id} 
+  courseModel.deleteOne({ _id: id }).then(val => {
+      // course deleted
+      let docCount = val.deletedCount;
+      let responsMessage = docCount ? "Delleted document" : "Document Not found";
+      res.status(response.OK_200);
+      res.json({
+          success: true,
+          deletedCount: docCount,
+          message: responsMessage
+      })
+    
+  }).catch(err => {
+      // course not deleted
+      res.status(response.NO_CONTENT_204);
+      res.json({
+          success: false,
+          message: "Error occured"
+      })
+  })
+
+};
+
 
 
 export default {
   getCourses,
   getCoursesById,
   createCourse,
-  updateACourse
+  updateACourse,
+  deletecourse
 };
 

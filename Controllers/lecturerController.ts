@@ -2,7 +2,7 @@
  * Author: Ntokungwia Zidane
  * Contributors: 
  *
- * Project: Bato Store API
+ * Project: 
  * This is used to boot up our API
  * Created on Tuesday Jan 18 2022
 
@@ -140,12 +140,44 @@ const updateALecturer = (req: any, res: any) => {
     })
 };
 
-
+/**
+ * 
+ * used to delete a lecturer
+ *  @param req - request object
+ *  @param res - response object
+ */
+ const deleteLecturer = (req: any, res: any) => {
+    // setting the id of the lecturer if passed to {id}
+    let id = req.params.id ? req.params.id : '';
+   
+    // deleting the lecturer where {id} 
+    lecturerModel.deleteOne({ _id: id }).then(val => {
+        // lecturer deleted
+        let docCount = val.deletedCount;
+        let responsMessage = docCount ? "Delleted document" : "Document Not found";
+        res.status(response.OK_200);
+        res.json({
+            success: true,
+            deletedCount: docCount,
+            message: responsMessage
+        })
+      
+    }).catch(err => {
+        // lecturer not deleted
+        res.status(response.NO_CONTENT_204);
+        res.json({
+            success: false,
+            message: "Error occured"
+        })
+    })
+  
+  };
 
 export default {
   getLecturers,
   getLecturerById,
   createLecturer,
-  updateALecturer
+  updateALecturer,
+  deleteLecturer
 };
 

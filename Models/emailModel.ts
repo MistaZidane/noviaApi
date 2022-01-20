@@ -2,7 +2,7 @@
  * Author: Ntokungwia Zidane
  * Contributors: 
  *
- * Project: Bato Store API
+ * Project: 
  * This is used to boot up our API
  * Created on Tuesday Jan 18 2022
 

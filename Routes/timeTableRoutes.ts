@@ -18,10 +18,10 @@ import controller from "../controllers";
 
 const router = express.Router();
 
-router.get("/lecturer/", controller.getLecturersController);
-router.get("/lecturer/:id", controller.getLecturerByIdController);
-router.post("/lecturer/", controller.createLecturerControler);
-router.patch("/lecturer/:id", controller.updateLecturerController);
-router.delete("/lecturer/:id", controller.deleteLecturerController);
+router.get("/table/", controller.getTimeTableController);
+router.get("/table/:id", controller.getTimeTableByIdController);
+router.post("/table/", controller.createTimeTableControler);
+router.patch("/table/:id", controller.updateTimeTableController);
+router.delete("/table/:id", controller.deleteTimeTableController);
 
 export default router;

@@ -13,12 +13,15 @@ import mongoose = require("mongoose");
 import paginator = require("mongoose-paginate-v2");
 
 const Schema = mongoose.Schema;
-const LecturerSchema = new Schema({
+const DepartmentSchema = new Schema({
     name: { type: String, unique: true, require: true },
-    email: { type: String, default: '' },
-    phone: { type: String, default: '' },
+    laboratories: [],
+    size: { type: Number, require: true },
+    campus: { type: Schema.Types.ObjectId,  require: true, ref: 'campus' },
+    daysAndCoursedToHave: [],
+    courses:[]
     
 });
 
-LecturerSchema.plugin(paginator);
-export default mongoose.model('lecturer', LecturerSchema);
+DepartmentSchema.plugin(paginator);
+export default mongoose.model('departments', DepartmentSchema);
