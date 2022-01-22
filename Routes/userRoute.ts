@@ -12,13 +12,13 @@ import * as express from "express";
 import controller from "../controllers";
 
 // auth middleware
-import authMiddleware from "../middlewares/index";
+import authMiddleware from "../middlewares";
 
 
 
 const router = express.Router();
 
-router.get("/log/",authMiddleware.authJwt.default.verifyToken, controller.getLogController);
-
+router.post("/signup/",authMiddleware.verifySignUp, controller.createUserController);
+router.post("/login/", controller.loginUserController);
 
 export default router;

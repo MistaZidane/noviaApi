@@ -16,13 +16,16 @@
   ],
   "author": "Ntokungwia Zidane",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-list-endpoints": "^4.0.1",
     "formidable": "^1.2.6",
     "joi": "^17.4.0",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.13.14",
     "mongoose-paginate-v2": "^1.5.0",
+    "nodemailer": "^6.7.2",
     "path": "^0.12.7",
     "process": "^0.11.10",
     "tslog": "^3.1.1"

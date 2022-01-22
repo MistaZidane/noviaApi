@@ -17,6 +17,9 @@ import tableRoutes from './timeTableRoutes';
 import unassignedRoutes from './unassignedRoute';
 import seatingRoute from  './seatingRoute';
  import logRoute from './logRoute';
+ import userRoute from "./userRoute";
+ import emailRoute from "./emailRoute";
+
 export default {
 
     courseRoutes,
@@ -26,6 +29,8 @@ export default {
     tableRoutes,
     unassignedRoutes,
     seatingRoute,
-    logRoute
+    logRoute,
+    userRoute,
+    emailRoute
       
 }

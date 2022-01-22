@@ -18,6 +18,8 @@ import * as TimeTableController from "./timeTableController";
 import * as unassignedController from "./unassignedController";
 import * as seatingController from "./seatingController";
 import logsController from "./logsController";
+import userController from "./userController";
+import emailController from "./emailController";
 
 export default {
     // for courses
@@ -67,5 +69,21 @@ export default {
    deleteSeatingController: seatingController.default.deleteSeating, 
 
    // logs
-   getLogController: logsController.getLogs
+   getLogController: logsController.getLogs,
+
+
+   // user
+   createUserController: userController.signUp,
+   loginUserController: userController.login,
+
+
+   // for email
+   // for seating
+   getEmailsController: emailController.getEmails,
+   //getSeatingByIdController: seatingController.default.getSeatingById,
+   createEmailControler: emailController.createEmail,
+   updateEmailController: emailController.updateEmail,
+   deleteEmailController: emailController.deleteEmail, 
+   sendMailController: emailController.sendAEmails,
 }
+
