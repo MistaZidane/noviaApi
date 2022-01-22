@@ -12,16 +12,16 @@ import * as express from "express";
 import controller from "../controllers";
 
 // auth middleware
-// import authMiddleware from "../middlewares/authMiddleware";
+import authMiddleware from "../middlewares/index";
 
 
 
 const router = express.Router();
 
-router.get("/courses/", controller.getCoursesController);
-router.get("/courses/:id", controller.getCoursesByIdController);
-router.post("/courses/", controller.createCourseControler);
-router.patch("/courses/:id", controller.updateCourseController);
-router.delete("/courses/:id", controller.deleteCourseController)
+router.get("/courses/",authMiddleware.authJwt.default.verifyToken, controller.getCoursesController);
+router.get("/courses/:id",authMiddleware.authJwt.default.verifyToken, controller.getCoursesByIdController);
+router.post("/courses/",authMiddleware.authJwt.default.verifyToken, controller.createCourseControler);
+router.patch("/courses/:id",authMiddleware.authJwt.default.verifyToken, controller.updateCourseController);
+router.delete("/courses/:id",authMiddleware.authJwt.default.verifyToken, controller.deleteCourseController)
 
 export default router;

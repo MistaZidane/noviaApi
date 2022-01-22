@@ -12,16 +12,16 @@ import * as express from "express";
 import controller from "../controllers";
 
 // auth middleware
-// import authMiddleware from "../middlewares/authMiddleware";
+import authMiddleware from "../middlewares/index";
 
 
 
 const router = express.Router();
 
-router.get("/table/", controller.getTimeTableController);
-router.get("/table/:id", controller.getTimeTableByIdController);
-router.post("/table/", controller.createTimeTableControler);
-router.patch("/table/:id", controller.updateTimeTableController);
-router.delete("/table/:id", controller.deleteTimeTableController);
+router.get("/table/",authMiddleware.authJwt.default.verifyToken, controller.getTimeTableController);
+router.get("/table/:id",authMiddleware.authJwt.default.verifyToken, controller.getTimeTableByIdController);
+router.post("/table/",authMiddleware.authJwt.default.verifyToken, controller.createTimeTableControler);
+router.patch("/table/:id",authMiddleware.authJwt.default.verifyToken, controller.updateTimeTableController);
+router.delete("/table/:id",authMiddleware.authJwt.default.verifyToken, controller.deleteTimeTableController);
 
 export default router;

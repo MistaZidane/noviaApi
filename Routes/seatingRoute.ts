@@ -12,16 +12,16 @@ import * as express from "express";
 import controller from "../controllers";
 
 // auth middleware
-// import authMiddleware from "../middlewares/authMiddleware";
+import authMiddleware from "../middlewares/index";
 
 
 
 const router = express.Router();
 
-router.get("/seating/", controller.getSeatingController);
-router.get("/seating/:id", controller.getSeatingByIdController);
-router.post("/seating/", controller.createSeatingControler);
-router.patch("/seating/:id", controller.updateSeatingController);
-router.delete("/seating/:id", controller.deleteSeatingController);
+router.get("/seating/",authMiddleware.authJwt.default.verifyToken, controller.getSeatingController);
+router.get("/seating/:id",authMiddleware.authJwt.default.verifyToken, controller.getSeatingByIdController);
+router.post("/seating/",authMiddleware.authJwt.default.verifyToken, controller.createSeatingControler);
+router.patch("/seating/:id",authMiddleware.authJwt.default.verifyToken, controller.updateSeatingController);
+router.delete("/seating/:id",authMiddleware.authJwt.default.verifyToken, controller.deleteSeatingController);
 
 export default router;
