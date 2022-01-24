@@ -20,6 +20,7 @@ import * as seatingController from "./seatingController";
 import logsController from "./logsController";
 import userController from "./userController";
 import emailController from "./emailController";
+import authCheckController from "./authCheckController";
 
 export default {
     // for courses
@@ -85,5 +86,8 @@ export default {
    updateEmailController: emailController.updateEmail,
    deleteEmailController: emailController.deleteEmail, 
    sendMailController: emailController.sendAEmails,
+
+   // authCheck 
+   authCheckController: authCheckController.check
 }
 

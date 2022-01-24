@@ -20,5 +20,6 @@ const router = express.Router();
 
 router.post("/signup/",authMiddleware.verifySignUp, controller.createUserController);
 router.post("/login/", controller.loginUserController);
+router.post("/auth-check/",authMiddleware.verifySignUp, controller.authCheckController);
 
 export default router;

@@ -62,6 +62,8 @@ const signUp = (req,res)=>{
 }
 
 const login = (req,res)=>{
+
+    
     userModel.findOne({
         email: req.body.email
       }).exec((err, user) => {
@@ -90,13 +92,13 @@ const login = (req,res)=>{
           }
     
           var token = jwt.sign({ id: user.id }, config.secret, {
-            expiresIn: 10800 // 24 hours
+            expiresIn: 10800 
           });
     
           res.status(200).send({
             id: user._id,
             email: user.email,
-            accessToken: token
+            token: token
           });
         });
 }
