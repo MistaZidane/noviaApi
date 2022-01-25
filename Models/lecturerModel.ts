@@ -17,6 +17,7 @@ const LecturerSchema = new Schema({
     name: { type: String, unique: true, require: true },
     email: { type: String, default: '' },
     phone: { type: String, default: '' },
+    courses: [{type:Schema.Types.ObjectId,ref: "courses", unique:true}]
     
 });
 

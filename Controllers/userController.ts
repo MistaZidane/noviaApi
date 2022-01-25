@@ -96,7 +96,7 @@ const login = (req,res)=>{
           });
     
           res.status(200).send({
-            id: user._id,
+            // id: user._id,
             email: user.email,
             token: token
           });

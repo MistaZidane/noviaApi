@@ -53,24 +53,24 @@ const getLecturers = (req: any, res: any) => {
         limit: req.query.limit ? req.query.limit : 10,
     };
     
-    lecturerModel.find((err,data)=>{
-      if(!err){
-                 console.log(data)
-            res.status(response.OK_200);
-            res.json({
-                success: true,
-                docs: data
-            });
-      }
-      else{
-        res.status(response.BAD_REQUEST_400);
-                console.log(err)
-                res.json({
-                    success: false,
-                    docs: []
-                })
-      }
-    });
+    lecturerModel.find().populate('courses').exec((err,data)=>{
+        if(!err){
+                   console.log(data)
+              res.status(response.OK_200);
+              res.json({
+                  success: true,
+                  docs: data
+              });
+        }
+        else{
+          res.status(response.BAD_REQUEST_400);
+                  console.log(err)
+                  res.json({
+                      success: false,
+                      docs: []
+                  })
+        }
+      });
 
 
 };

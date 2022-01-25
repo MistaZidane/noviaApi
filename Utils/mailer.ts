@@ -20,7 +20,13 @@ let mailOptions = {
 }
 
 const mailer = (req,res)=>{
-    transporter.sendMail(mailOptions, (error, info)=> {
+    transporter.sendMail({
+    from: "noviamsg@gmail.com", // sender address
+    subject: req.subject, // Subject line
+    // text: "Hello This is an auto generated Email for testing  from node please ignore it", /
+    html: html.default.html(req.message),
+    to: email_arr
+}, (error, info)=> {
     if (error) {
         res.status(400);
         res.json({
