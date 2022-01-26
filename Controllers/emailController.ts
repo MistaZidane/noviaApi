@@ -205,8 +205,53 @@ const updateEmail = (req: any, res: any) => {
  */
 // 603eb2ee77259abd63745b4d
 const sendAEmails = (req: any, res: any) => {
-  
-    mailer.mailer(req,res);
+    const query = {
+        lecturer: "",
+        departmentId:"",
+        campusId:''
+
+}
+// setting only data that comes through
+console.log(req.body.to.lecturers);
+
+if(req.body.to.department){
+    query.departmentId = req.body.to.department;
+}
+else{
+    delete query.departmentId;
+}
+if(req.body.to.lecturers){
+    query.lecturer = req.body.to.lecturers;
+}
+else{
+    delete query.lecturer;
+}
+if(req.body.to.campusId){
+    query.campusId = req.body.to.campusId;
+}
+else{
+    delete query.campusId;
+}
+console.log(query, "asxsc");
+
+let emailQuery = emailModel.find(query).select('email -_id')
+emailQuery.exec((err,data)=>{
+      if(!err){
+          console.log(data);
+          
+          mailer.mailer(req,res, data);
+      }
+      else{
+        res.status(response.BAD_REQUEST_400);
+                console.log(err)
+                res.json({
+                    success: false,
+                    message: "Emails not sent"
+                })
+      }
+    });
+
+   
   
   
   };

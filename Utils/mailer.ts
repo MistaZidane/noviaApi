@@ -9,22 +9,21 @@ let transporter = nodemailer.createTransport({
     }
 });
 
-let email_arr = ["mistazidane@gmail.com", "ntokungwiazidane@gmail.com"];
+let email_arr = [];
 
-let mailOptions = {
-    from: "noviamsg@gmail.com", // sender address
-    subject: "Hello ✔", // Subject line
-    // text: "Hello This is an auto generated Email for testing  from node please ignore it", /
-    html: html.default.html,
-    to: email_arr
-}
-
-const mailer = (req,res)=>{
+const mailer = (req,res, emails)=>{
+    console.log(emails);
+    
+    emails.forEach(element => {
+        email_arr.push(element.email)
+    });
+    console.log(req.body);
+    
     transporter.sendMail({
     from: "noviamsg@gmail.com", // sender address
-    subject: req.subject, // Subject line
+    subject: req.body.subject, // Subject line
     // text: "Hello This is an auto generated Email for testing  from node please ignore it", /
-    html: html.default.html(req.message),
+    html: html.default.html(req.body.message),
     to: email_arr
 }, (error, info)=> {
     if (error) {
