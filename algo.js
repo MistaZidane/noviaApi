@@ -34,16 +34,16 @@ let departments = [
         size: 25,
         campus: 'Campus B',
         daysAndCoursedToHave: [
-            { day: "Monday", courses: ["english"] },
+            { day: "Monday", courses: ["english","french"] },
             { day: "Tuesday", courses: ["maths"] },
             { day: "Wednesday", courses: ["_"] },
             { day: "Thursday", courses: ["sql"] },
             { day: "Friday", courses: ["_"] },
-            { day: "Saturday", courses: ["french"] },
+            { day: "Saturday", courses: ["_"] },
         ],
         courses: [
             { title: "maths", totHours: 40, lecturer: "Zidane", needsLab: true, weight: 13, numberOfHoursAweek: 4, periods: [1,2,3, 4] , days: ['Tuesday']},
-            { title: "french", totHours: 16, lecturer: "odin", needsLab: false, weight: 2, numberOfHoursAweek: 2, periods: [4] , days: ['Saturday']},
+            { title: "french", totHours: 16, lecturer: "odin", needsLab: false, weight: 2, numberOfHoursAweek: 2, periods: [4] , days: ['Monday']},
             { title: "sql", totHours: 36, lecturer: "ngwa", needsLab: false, weight: 3, numberOfHoursAweek: 4, periods: [1, 2] , days: ['Thursday']},
             { title: "english", totHours: 16, lecturer: "longest", needsLab: true, weight: 4, numberOfHoursAweek: 2, periods: [1] , days: ['Monday']}
         ]
@@ -226,18 +226,35 @@ function generateClasroomsTableForACampus(campusName) {
             })
             // console.log(course.title);
             // checking if the course is in the morning or afternoon
+            // handling whole day classes using morning periods
             if (course.periods.includes(1) || course.periods.includes(2)) {
-                morningClassesAndDepartments.push(data);
-            }
-            else {
-                afternoonClassesAndDepartments.push(data);
-            }
-            // checking if course is for the whole day or for three periods
+                // console.log(data, "data");
+                // checking if course is for the whole day or for three periods
             // this should enable them to stay in one classroom without changing classrooms
             if(course.periods.length >=3 ){
                 data.wholeDay = true;
-                wholeDayClasses.push(data);
+                // wholeDayClasses.push(data);
+                morningClassesAndDepartments.push(data);
+                // console.log("morning side", data);
             }
+            else{
+                morningClassesAndDepartments.push(data);
+            }
+            }
+            else if(course.periods.includes(3) || course.periods.includes(4)){
+                if(course.periods.length >=3 ){
+                    // console.log(data, "datjv,ggcvjgvvugutvfytkukufyukyffukyfuyfyuyfuyfa");
+                    data.wholeDay = true;
+                    // wholeDayClasses.push(data);
+                    afternoonClassesAndDepartments.push(data);
+                }
+                else{
+                    afternoonClassesAndDepartments.push(data);
+                    // console.log(data, "datjv,ggcvjgvvugutvfytkukufyukyffukyfuyfyuyfuyfa");
+                }
+                
+            }
+            
         })
         currentDepartment.daysAndCoursedToHave.forEach((currentDay) => {
 
@@ -263,7 +280,7 @@ function generateClasroomsTableForACampus(campusName) {
              dayMorningDepartments[`${day}`] = activeDayMorningDepartments;
         }
     });
-    console.log(dayMorningDepartments, 'day morning departments');
+    // console.log(dayMorningDepartments, 'day morning departments');
     
 
     // share classes to departments in the morning
@@ -285,7 +302,7 @@ function generateClasroomsTableForACampus(campusName) {
              // setting the output day
              let  departOutputSession = departOutput.table[departmentsInfo.day] = {};
              
-             console.log(departmentsInfo,'info');
+            //  console.log(departmentsInfo,'info');
             // checking if the course needs a lab
             if(departmentsInfo.needsLab ==  true){
                 console.log("lab needed");
@@ -308,15 +325,18 @@ function generateClasroomsTableForACampus(campusName) {
                  if(!usedLabs.includes(labs[0].name)){
                     bestLab = labs[0];
                     //  console.log("lab is free");
-                     
-                    
+                    let whole = false;
+                    if(departmentsInfo.wholeDay == true){
+                        whole = true;
+                     }
                    
                     // setting the out put period to morning
                         departOutputSession['morning'] = bestLab.name;
-                     console.log(`${departmentsInfo.department} has  ${departmentsInfo.course} in ${bestLab.name} on ${departmentsInfo.day} morning`);
+                        departOutputSession['wholeDay'] = whole;
+                     console.log(`${departmentsInfo.department} has  ${departmentsInfo.course} in ${bestLab.name} on ${departmentsInfo.day} morning wholeDay ${whole}`);
                     // setting choosen lab
                     chosen = bestLab.name;
-
+                    
                    
                      usedLabs.push(bestLab.name);
                  }
@@ -336,30 +356,22 @@ function generateClasroomsTableForACampus(campusName) {
                     else{
                         // console.log("best lab when not free", bestLab);
                         // setting the out put period to morning
+                        let whole = false;
+                        if(departmentsInfo.wholeDay == true){
+                            whole = true;
+                         }
                         departOutputSession['morning'] = bestLab.name;
-                    console.log(`${departmentsInfo.department} has  ${departmentsInfo.course} in ${bestLab.name} on ${departmentsInfo.day} morning`);
+                        departOutputSession['wholeDay'] = whole;
+                    console.log(`${departmentsInfo.department} has  ${departmentsInfo.course} in ${bestLab.name} on ${departmentsInfo.day} morning wholeDay ${whole}`);
                     // setting choosen lab
+                   
+                    
                     chosen = bestLab.name;
                     usedLabs.push(bestLab.name);
                     }
                     
                  }
-                 
-                // console.log(usedLabs);
-                // removing a lab that has been used for the whole day
-                if(departmentsInfo.wholeDay){
-                    console.log("whole day lab");
-                   
-                    console.log(chosen);
-                    let newClassesList = sectedCampus.classes.filter(el => el.name != chosen);
-                   sectedCampus.classes = newClassesList;
-                  
-
-                }
-                else{
-                    console.log("not whole day");
-                }
-          
+             
 
             }
             // course doesnt need a lab
@@ -379,11 +391,19 @@ function generateClasroomsTableForACampus(campusName) {
                 if(!usedClasses.includes(classes[0].name)){
                     bestClass = classes[0];
                     //  console.log("lab is free");
-                     console.log(`${departmentsInfo.department} has  ${departmentsInfo.course} in ${bestClass.name} on ${departmentsInfo.day} morning`);
+                    
                       // setting the out put period to morning
                       departOutputSession['morning'] = bestClass.name;
+                      let whole = false;
+                      if(departmentsInfo.wholeDay == true){
+                          whole = true;
+                       }
+                       departOutputSession['wholeDay'] = whole;
+                       console.log(`${departmentsInfo.department} has  ${departmentsInfo.course} in ${bestClass.name} on ${departmentsInfo.day} morning wholeDay ${whole}`);
                       // setting choosen class
                     chosen = bestClass.name;
+                   
+                    
                     usedClasses.push(bestClass.name);
                  }
                  // lab has not been used so we use the next best lab
@@ -403,13 +423,19 @@ function generateClasroomsTableForACampus(campusName) {
                         else{
                             console.log(`${departmentsInfo.department} cant have   ${departmentsInfo.course}  because the is not suitable lab on ${departmentsInfo.day} morning`);
                         }
+                       
                         outputUnassignedDepartments.push({day: departmentsInfo.day, department:departmentsInfo.department, course:departmentsInfo.course});
                     }
                     else{
+                        let whole = false;
+                        if(departmentsInfo.wholeDay == true){
+                            whole = true;
+                         }
                         // console.log("best lab when not free", bestClass);
-                    console.log(`${departmentsInfo.department} has  ${departmentsInfo.course} in ${bestClass.name} on ${departmentsInfo.day} morning`);
+                    console.log(`${departmentsInfo.department} has  ${departmentsInfo.course} in ${bestClass.name} on ${departmentsInfo.day} morning wholeDay ${whole}`);
                      // setting the out put period to morning
                      departOutputSession['morning'] = bestClass.name;
+                     departOutputSession['wholeDay'] = whole;
                      // setting choosen class
                     chosen = bestClass.name;
                     usedClasses.push(bestClass.name);
@@ -419,19 +445,7 @@ function generateClasroomsTableForACampus(campusName) {
                  
                 // console.log(usedClasses);
 
-                   // removing a class that has been used for the whole day
-                if(departmentsInfo.wholeDay){
-                    console.log("whole day class");
-                     
-                    console.log(chosen);
-                    let newClassesList = sectedCampus.classes.filter(el => el.name != chosen);
-                   sectedCampus.classes = newClassesList;
-                  
-
-                }
-                else{
-                    console.log("not whole day");
-                }
+              
           
 
             }
@@ -483,7 +497,9 @@ Afternoon
             
         let  departOutputSession = departOutput.table[departmentsInfo.day] = departOutput.table[departmentsInfo.day]?  departOutput.table[departmentsInfo.day] : {}
             
-            
+            // console.log(wholeDayClasses, "wholledwedfe dafter");
+            // console.log(departmentsInfo);
+         
             if(departmentsInfo.needsLab ==  true){
                 console.log("lab needed");
                 // console.log(sectedCampus.classes);
@@ -492,9 +508,11 @@ Afternoon
                 let labs = [];
                 sectedCampus.classes.forEach((classRoom)=>{
                     if(departmentsInfo.laboratories.includes(classRoom.name)){
+                        
                         labs.push(classRoom);
                     }
                 });
+               
                 // getting the best fit lab
                 // console.log(labs,'labs before', labs.length);
                 let bestLab = {};
