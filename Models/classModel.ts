@@ -16,11 +16,12 @@ const Schema = mongoose.Schema;
 
 
 
-const CampusSchema = new Schema({
-    name: { type: String, unique: true, require: true },
-    classes: [],
-    
+const ClassSchema =new Schema({
+    size: {type: Number, require:true},
+    name: {type: String, require:true, unique:true},
+    campusId: {type:String, require: true}
 });
 
-CampusSchema.plugin(paginator);
-export default mongoose.model('campus', CampusSchema);
+
+ClassSchema.plugin(paginator);
+export default mongoose.model('classes', ClassSchema);

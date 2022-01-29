@@ -19,12 +19,13 @@ import seatingRoute from  './seatingRoute';
  import logRoute from './logRoute';
  import userRoute from "./userRoute";
  import emailRoute from "./emailRoute";
-
+import classRoute from "./classRoute";
 export default {
 
     courseRoutes,
     lecturerRoutes,
     campusRoutes,
+    classRoute,
     departmentRoutes,
     tableRoutes,
     unassignedRoutes,

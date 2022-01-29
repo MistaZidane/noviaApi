@@ -21,6 +21,7 @@ import logsController from "./logsController";
 import userController from "./userController";
 import emailController from "./emailController";
 import authCheckController from "./authCheckController";
+import classController from "./classController";
 
 export default {
     // for courses
@@ -41,13 +42,19 @@ export default {
      createCampusControler: campusController.default.createCampus,
      updatecampusController: campusController.default.updateACampus,  
      deleteCampusController: campusController.default.deleteCampus,   
-  // for campus
+  // for department
   getDepartmentController: departmentController.default.getDepartments,
   getDepartmentByIdController: departmentController.default.getDepartmentById,
   createDepartmentControler: departmentController.default.createDepartment,
   updatedepartmentController: departmentController.default.updateADepartment,
   deleteDepartmentController: departmentController.default.deleteDepartment,
-  
+    // for class
+    getClassesController: classController.getClass,
+    getClassByCampusIdController: classController.getClassByCampusId,
+    createClassControler: classController.createClass,
+    updateClassController: classController.updateAClass,
+    deleteClassController: classController.deleteClass,
+    
   // for time table
   getTimeTableController: TimeTableController.default.getTimeTables,
   getTimeTableByIdController: TimeTableController.default.getTimeTableById,

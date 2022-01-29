@@ -30,7 +30,7 @@ const createCourse = (req: any, res: any) => {
             docs: data
         });
     }).catch(err => {
-        res.status(response.BAD_REQUEST_400);
+        res.status(response.OK_200);
         res.json({
             success: false,
             docs: []

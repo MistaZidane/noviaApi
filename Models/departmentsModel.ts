@@ -13,13 +13,27 @@ import mongoose = require("mongoose");
 import paginator = require("mongoose-paginate-v2");
 
 const Schema = mongoose.Schema;
+
+const DepartmentCourseSchema =new Schema({
+    course: [{type: Schema.Types.ObjectId, ref: 'courses' }],
+    lecturer:  [{type: Schema.Types.ObjectId, ref: 'lecturer' }],
+    needsLab: {type: Boolean, default: false},
+    totHours: {type: Number},
+    weight: {type: Number},
+    numberOfHoursAweek:{type: Number},
+    days: []
+});
+
+
 const DepartmentSchema = new Schema({
     name: { type: String, unique: true, require: true },
     laboratories: [],
     size: { type: Number, require: true },
     campus: { type: Schema.Types.ObjectId,  require: true, ref: 'campus' },
     daysAndCoursedToHave: [],
-    courses:[]
+    night: {type: Boolean, default: false},
+    semester: {},
+    courses:[DepartmentCourseSchema]
     
 });
 
