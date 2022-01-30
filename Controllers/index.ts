@@ -22,6 +22,7 @@ import userController from "./userController";
 import emailController from "./emailController";
 import authCheckController from "./authCheckController";
 import classController from "./classController";
+import semesterController from "./semesterController";
 
 export default {
     // for courses
@@ -75,7 +76,12 @@ export default {
    createSeatingControler: seatingController.default.createSeating,
    updateSeatingController: seatingController.default.updateSeating,
    deleteSeatingController: seatingController.default.deleteSeating, 
-
+  // for semester
+  getSemestersController: semesterController.getSemester,
+  getSemesterByIdController: semesterController.getSemesterById,
+  createSemesterControler: semesterController.createSemester,
+  updateSemesterController: semesterController.updateASemester,  
+  deleteSemesterController: semesterController.deleteSemester,  
    // logs
    getLogController: logsController.getLogs,
 

@@ -15,15 +15,15 @@ import messages from "../messages/messages";
 
 import path from "path"
 import mongoosePaginate = require('mongoose-paginate-v2');
-import CampusModel from "../Models/campusModel";
+import semesterModel from "../Models/semesterModel";
 /**
  * 
- * used to create a campus
+ * used to create a Semester
  *  @param req - request object
  *  @param res - response object
  */
-const createCampus = (req: any, res: any) => {
-    CampusModel.create(req.body).then((data) => {
+const createSemester = (req: any, res: any) => {
+    semesterModel.create(req.body).then((data) => {
         res.status(response.CREATED_201);
         res.json({
             success: true,
@@ -42,18 +42,18 @@ const createCampus = (req: any, res: any) => {
 
 /**
  * 
- * used to get campuss
+ * used to get Semesters
  *  @param req - request object
  *  @param res - response object
  */
 // 603eb2ee77259abd63745b4d
-const getCampus = (req: any, res: any) => {
+const getSemester = (req: any, res: any) => {
     const options = {
         page: req.query.page ? req.query.page : 1,
         limit: req.query.limit ? req.query.limit : 10,
     };
     
-    CampusModel.find((err,data)=>{
+    semesterModel.find((err,data)=>{
       if(!err){
                  console.log(data)
             res.status(response.OK_200);
@@ -83,14 +83,14 @@ const getCampus = (req: any, res: any) => {
  *  @param res - response object
  */
 // 603eb2ee77259abd63745b4d
-const getCampusById = (req: any, res: any) => {
+const getSemesterById = (req: any, res: any) => {
   let id = req.params.id ? req.params.id : '';
   const options = {
       page: req.query.page ? req.query.page : 1,
       limit: req.query.limit ? req.query.limit : 10,
   };
   
-  CampusModel.findById(id,(err,data)=>{
+  semesterModel.findById(id,(err,data)=>{
     if(!err){
                console.log(data)
           res.status(response.OK_200);
@@ -113,16 +113,16 @@ const getCampusById = (req: any, res: any) => {
 };
 /**
  * 
- * used to update a campus
+ * used to update a Semester
  *  @param req - request object
  *  @param res - response object
  */
-const updateACampus = (req: any, res: any) => {
+const updateASemester = (req: any, res: any) => {
     let id = req.params.id ? req.params.id : '';
 
     let updateData = req.body;
 
-    CampusModel.findOneAndUpdate({ _id: id}, updateData, { new: true }, (err, doc) => {
+    semesterModel.findOneAndUpdate({ _id: id}, updateData, { new: true }, (err, doc) => {
         if (err) {
             res.status(response.OK_200);
             res.json({
@@ -142,17 +142,17 @@ const updateACampus = (req: any, res: any) => {
 };
 /**
  * 
- * used to delete a campus
+ * used to delete a Semester
  *  @param req - request object
  *  @param res - response object
  */
- const deleteCampus = (req: any, res: any) => {
-    // setting the id of the campus if passed to {id}
+ const deleteSemester = (req: any, res: any) => {
+    // setting the id of the Semester if passed to {id}
     let id = req.params.id ? req.params.id : '';
    
-    // deleting the campus where {id} 
-    CampusModel.deleteOne({ _id: id }).then(val => {
-        // campus deleted
+    // deleting the Semester where {id} 
+    semesterModel.deleteOne({ _id: id }).then(val => {
+        // Semester deleted
         let docCount = val.deletedCount;
         let responsMessage = docCount ? "Delleted document" : "Document Not found";
         res.status(response.OK_200);
@@ -163,7 +163,7 @@ const updateACampus = (req: any, res: any) => {
         })
       
     }).catch(err => {
-        // campus not deleted
+        // Semester not deleted
         res.status(response.NO_CONTENT_204);
         res.json({
             success: false,
@@ -175,10 +175,10 @@ const updateACampus = (req: any, res: any) => {
 
 
 export default {
-  getCampus,
-  getCampusById,
-  createCampus,
-  updateACampus,
-  deleteCampus
+  getSemester,
+  getSemesterById,
+  createSemester,
+  updateASemester,
+  deleteSemester
 };
 

@@ -31,8 +31,8 @@ const DepartmentSchema = new Schema({
     size: { type: Number, require: true },
     campus: { type: Schema.Types.ObjectId,  require: true, ref: 'campus' },
     daysAndCoursedToHave: [],
-    night: {type: Boolean, default: false},
-    semester: {},
+    night: {type: String, default: "Day"},
+    semester: {type: String},
     courses:[DepartmentCourseSchema]
     
 });

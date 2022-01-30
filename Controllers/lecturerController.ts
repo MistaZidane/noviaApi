@@ -23,6 +23,7 @@ import lecturerModel from "../Models/lecturerModel";
  *  @param res - response object
  */
 const createLecturer = (req: any, res: any) => {
+    console.log(req.body, "body")
     lecturerModel.create(req.body).then((data) => {
         res.status(response.CREATED_201);
         res.json({
@@ -30,7 +31,9 @@ const createLecturer = (req: any, res: any) => {
             docs: data
         });
     }).catch(err => {
-        res.status(response.BAD_REQUEST_400);
+        console.log(err);
+        
+        res.status(response.OK_200);
         res.json({
             success: false,
             docs: []
