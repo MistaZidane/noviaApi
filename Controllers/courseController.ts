@@ -111,6 +111,7 @@ const getCoursesById = (req: any, res: any) => {
 
 
 };
+
 /**
  * 
  * used to update a course
@@ -139,6 +140,79 @@ const updateACourse = (req: any, res: any) => {
         }
     })
 };
+/**
+ * 
+ * used to get a coure for a specific department
+ *  @param req - request object
+ *  @param res - response object
+ */
+const getCoursesByDepartmentId = (req: any, res: any)=>{
+    let id = req.params.id ? req.params.id : '';
+    let departId = req.params.departId ? req.params.departId: '';
+    const options = {
+        page: req.query.page ? req.query.page : 1,
+        limit: req.query.limit ? req.query.limit : 10,
+    };
+    console.log(departId+"");
+    courseModel.find({$or:[{departments:departId+""},{general:true}]}).populate("lecturers").exec((err,data)=>{
+        if(!err){
+                //    console.log(data)
+              res.status(response.OK_200);
+              res.json({
+                  success: true,
+                  docs: data
+              });
+        }
+        else{
+          res.status(response.BAD_REQUEST_400);
+                  console.log(err)
+                  res.json({
+                      success: false,
+                      docs: []
+                  })
+        }
+      })
+    // {lecturers:[departId]}
+    // courseModel.find({$or:[{departments:departId+""},{general:true}]},(err,data)=>{
+    //     if(!err){
+    //             //    console.log(data)
+    //           res.status(response.OK_200);
+    //           res.json({
+    //               success: true,
+    //               docs: data
+    //           });
+    //     }
+    //     else{
+    //       res.status(response.BAD_REQUEST_400);
+    //               console.log(err)
+    //               res.json({
+    //                   success: false,
+    //                   docs: []
+    //               })
+    //     }
+    //   });
+
+    // courseModel.findById(id,(err,data)=>{
+    //   if(!err){
+    //              console.log(data)
+    //         res.status(response.OK_200);
+    //         res.json({
+    //             success: true,
+    //             docs: data
+    //         });
+    //   }
+    //   else{
+    //     res.status(response.BAD_REQUEST_400);
+    //             console.log(err)
+    //             res.json({
+    //                 success: false,
+    //                 docs: []
+    //             })
+    //   }
+    // });
+  
+}
+
 /**
  * 
  * used to delete a course
@@ -179,6 +253,7 @@ export default {
   getCoursesById,
   createCourse,
   updateACourse,
-  deletecourse
+  deletecourse,
+  getCoursesByDepartmentId
 };
 

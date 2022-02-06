@@ -21,6 +21,7 @@ const DepartmentCourseSchema =new Schema({
     totHours: {type: Number},
     weight: {type: Number},
     numberOfHoursAweek:{type: Number},
+    semester: {type: String},
     days: []
 });
 
@@ -31,8 +32,7 @@ const DepartmentSchema = new Schema({
     size: { type: Number, require: true },
     campus: { type: Schema.Types.ObjectId,  require: true, ref: 'campus' },
     daysAndCoursedToHave: [],
-    night: {type: String, default: "Day"},
-    semester: {type: String},
+    session: {type: String, default: "Day"},
     courses:[DepartmentCourseSchema]
     
 });

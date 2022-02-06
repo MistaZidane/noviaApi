@@ -20,7 +20,9 @@ import seatingRoute from  './seatingRoute';
  import userRoute from "./userRoute";
  import emailRoute from "./emailRoute";
 import classRoute from "./classRoute";
-import semesterRoute from "./semesterRoute"
+import semesterRoute from "./semesterRoute";
+import courseIndepartmentRoute from "./courseInDepartmentRoute"
+
 export default {
 
     courseRoutes,
@@ -34,6 +36,7 @@ export default {
     logRoute,
     userRoute,
     emailRoute,
-    semesterRoute
+    semesterRoute,
+    courseIndepartmentRoute
       
 }

@@ -107,7 +107,7 @@ const getDepartmentById = (req: any, res: any) => {
       limit: req.query.limit ? req.query.limit : 10,
   };
   
-  departmentModel.findById(id,(err,data)=>{
+  departmentModel.findById(id).populate('campus').exec((err,data)=>{
     if(!err){
                console.log(data)
           res.status(response.OK_200);
@@ -128,6 +128,8 @@ const getDepartmentById = (req: any, res: any) => {
 
 
 };
+
+
 /**
  * 
  * used to update a department

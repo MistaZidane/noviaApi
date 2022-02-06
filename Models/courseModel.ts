@@ -16,7 +16,9 @@ const Schema = mongoose.Schema;
 const CourseSchema = new Schema({
     title: { type: String, unique: true, require: true },
     description: { type: String, default: '' },
-    
+    departments: [{type: String}],
+    lecturers: [{type:Schema.Types.ObjectId, ref:'lecturer'}],
+    general: {type: Boolean, default: false}
 });
 
 CourseSchema.plugin(paginator);

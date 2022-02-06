@@ -20,6 +20,7 @@ const router = express.Router();
 
 router.get("/courses/",authMiddleware.authJwt.default.verifyToken, controller.getCoursesController);
 router.get("/courses/:id",authMiddleware.authJwt.default.verifyToken, controller.getCoursesByIdController);
+router.get("/courses-by-depart/:departId",authMiddleware.authJwt.default.verifyToken, controller.getCoursesByDepartment);
 router.post("/courses/",authMiddleware.authJwt.default.verifyToken, controller.createCourseControler);
 router.patch("/courses/:id",authMiddleware.authJwt.default.verifyToken, controller.updateCourseController);
 router.delete("/courses/:id",authMiddleware.authJwt.default.verifyToken, controller.deleteCourseController)

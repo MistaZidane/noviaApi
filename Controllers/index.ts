@@ -23,7 +23,7 @@ import emailController from "./emailController";
 import authCheckController from "./authCheckController";
 import classController from "./classController";
 import semesterController from "./semesterController";
-
+import courseInDepartmentController from "./courseInDepartmentController";
 export default {
     // for courses
     getCoursesController: courseController.default.getCourses,
@@ -31,6 +31,7 @@ export default {
     createCourseControler: courseController.default.createCourse,
     updateCourseController: courseController.default.updateACourse,
     deleteCourseController: courseController.default.deletecourse, 
+    getCoursesByDepartment: courseController.default.getCoursesByDepartmentId,
     // for lecturers
     getLecturersController: lecturerController.default.getLecturers,
     getLecturerByIdController: lecturerController.default.getLecturerById,
@@ -68,6 +69,14 @@ export default {
   createUnassignedControler: unassignedController.default.createUnassigned,
   updateUnassignedController: unassignedController.default.updateUnassigned,
   deleteUnassignedController: unassignedController.default.deleteUnassigned, 
+
+
+// for coursesInDepartments 
+createCourseInDepartmentController: courseInDepartmentController.createCourseInDepartment,
+getCourseInDepartmentByIdController: courseInDepartmentController.getCourseInDepartmentById,
+getCoursesInDepartmentController: courseInDepartmentController.getCoursesInDepartments,
+updateCourseInDepartmenrController: courseInDepartmentController.updateCourseInDepartment, 
+deleteCourseIndepartmentController: courseInDepartmentController.deleteCourseInDepartment,  
 
 
    // for seating
