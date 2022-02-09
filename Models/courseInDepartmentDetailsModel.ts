@@ -14,7 +14,7 @@ import paginator = require("mongoose-paginate-v2");
 
 const Schema = mongoose.Schema;
 const CourseSchema = new Schema({
-    course: { type:Schema.Types.ObjectId, unique: true, ref:'courses' },
+    course: { type:Schema.Types.ObjectId, ref:'courses' },
     semester: { type: String },
     department: {type: String,require:true},
     lecturer: {type:String, require:true},

@@ -22,6 +22,10 @@ import seatingRoute from  './seatingRoute';
 import classRoute from "./classRoute";
 import semesterRoute from "./semesterRoute";
 import courseIndepartmentRoute from "./courseInDepartmentRoute"
+import classFreeStateRoute from "./classFreeStateRoute";
+import lecturerFreeStateRoute from "./lecturerFreeStateRoute";
+import DepartmentFreeStateRoute from "./departmentFreeStateRoute";
+
 
 export default {
 
@@ -37,6 +41,9 @@ export default {
     userRoute,
     emailRoute,
     semesterRoute,
-    courseIndepartmentRoute
+    courseIndepartmentRoute,
+    classFreeStateRoute,
+    lecturerFreeStateRoute,
+    DepartmentFreeStateRoute
       
 }

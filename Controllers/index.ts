@@ -24,6 +24,11 @@ import authCheckController from "./authCheckController";
 import classController from "./classController";
 import semesterController from "./semesterController";
 import courseInDepartmentController from "./courseInDepartmentController";
+import lecturerFreeController from "./lecturerFreeController";
+import classFreeController from "./classFreeController";
+import departmentFreeController from "./departmentFreeController";
+
+
 export default {
     // for courses
     getCoursesController: courseController.default.getCourses,
@@ -93,7 +98,26 @@ deleteCourseIndepartmentController: courseInDepartmentController.deleteCourseInD
   deleteSemesterController: semesterController.deleteSemester,  
    // logs
    getLogController: logsController.getLogs,
+// lecturer free state 
+getLecturerFreeStateController: lecturerFreeController.getLecturersFree,
+getLecturerFreeStateByIdController: lecturerFreeController.getlecturerFreeById,
+createLecturerFreeStateController: lecturerFreeController.create,
+updateLecturerFreeStateController: lecturerFreeController.updatelecturerFree,
+deleteLecturerFreeStateController: lecturerFreeController.deletelecturerFree,
+// class free state 
+getClassFreeStateController: classFreeController.getClassesFree,
+getClassFreeStateByIdController: classFreeController.getclassFreeById,
+createClassFreeStateController: classFreeController.create,
+updateClassFreeStateController: classFreeController.updateclassFree,
+deleteClassFreeStateController: classFreeController.deleteclassFree,
 
+// department free state
+
+getDepartmentFreeStateController: departmentFreeController.getDepartmentsFree,
+getDepartmentFreeStateByIdController: departmentFreeController.getdepartmentFreeById,
+createDepartmentFreeStateController: departmentFreeController.create,
+updateDeparmentFreeStateController: departmentFreeController.updatedepartmentFree,
+deleteDepartmentFreeStateController: departmentFreeController.deletedepartmentFree,
 
    // user
    createUserController: userController.signUp,

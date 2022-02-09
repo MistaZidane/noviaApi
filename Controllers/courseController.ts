@@ -16,6 +16,7 @@ import messages from "../messages/messages";
 import path from "path"
 import mongoosePaginate = require('mongoose-paginate-v2');
 import courseModel from "../models/courseModel";
+import courseInDepartmentDetailsModel from "../Models/courseInDepartmentDetailsModel";
 /**
  * 
  * used to create a course
@@ -23,8 +24,35 @@ import courseModel from "../models/courseModel";
  *  @param res - response object
  */
 const createCourse = (req: any, res: any) => {
+    let departments: any = req.body.departments
+    console.log(req.body);
+    let departmentCourseData = [];
+
+
+
     courseModel.create(req.body).then((data) => {
         res.status(response.CREATED_201);
+        departments.forEach(element => {
+            console.log(element);
+            let obj = { 
+                course: data._id,
+                semester: "",
+                lecturer:req.body.lecturers[0],
+                department: element,
+                totHours: 10,
+                needsLab: false,
+                day: "MONDAY",
+                period: 1,
+    
+            }
+            departmentCourseData.push(obj)
+        });
+        courseInDepartmentDetailsModel.insertMany(departmentCourseData).then((state)=>{
+console.log(state, "************************************");
+
+        }).catch(err=>{
+            console.log(err, "************************************");
+        })
         res.json({
             success: true,
             docs: data
@@ -52,24 +80,25 @@ const getCourses = (req: any, res: any) => {
         page: req.query.page ? req.query.page : 1,
         limit: req.query.limit ? req.query.limit : 10,
     };
-    
-    courseModel.find((err,data)=>{
-      if(!err){
-                 console.log(data)
+
+
+    courseModel.find((err, data) => {
+        if (!err) {
+            console.log(data)
             res.status(response.OK_200);
             res.json({
                 success: true,
                 docs: data
             });
-      }
-      else{
-        res.status(response.BAD_REQUEST_400);
-                console.log(err)
-                res.json({
-                    success: false,
-                    docs: []
-                })
-      }
+        }
+        else {
+            res.status(response.BAD_REQUEST_400);
+            console.log(err)
+            res.json({
+                success: false,
+                docs: []
+            })
+        }
     });
 
 
@@ -84,30 +113,30 @@ const getCourses = (req: any, res: any) => {
  */
 // 603eb2ee77259abd63745b4d
 const getCoursesById = (req: any, res: any) => {
-  let id = req.params.id ? req.params.id : '';
-  const options = {
-      page: req.query.page ? req.query.page : 1,
-      limit: req.query.limit ? req.query.limit : 10,
-  };
-  
-  courseModel.findById(id,(err,data)=>{
-    if(!err){
-               console.log(data)
-          res.status(response.OK_200);
-          res.json({
-              success: true,
-              docs: data
-          });
-    }
-    else{
-      res.status(response.BAD_REQUEST_400);
-              console.log(err)
-              res.json({
-                  success: false,
-                  docs: []
-              })
-    }
-  });
+    let id = req.params.id ? req.params.id : '';
+    const options = {
+        page: req.query.page ? req.query.page : 1,
+        limit: req.query.limit ? req.query.limit : 10,
+    };
+
+    courseModel.findById(id, (err, data) => {
+        if (!err) {
+            console.log(data)
+            res.status(response.OK_200);
+            res.json({
+                success: true,
+                docs: data
+            });
+        }
+        else {
+            res.status(response.BAD_REQUEST_400);
+            console.log(err)
+            res.json({
+                success: false,
+                docs: []
+            })
+        }
+    });
 
 
 };
@@ -122,7 +151,7 @@ const updateACourse = (req: any, res: any) => {
     let id = req.params.id ? req.params.id : '';
 
     let updateData = req.body;
-    courseModel.findOneAndUpdate({ _id: id}, updateData, { new: true }, (err, doc) => {
+    courseModel.findOneAndUpdate({ _id: id }, updateData, { new: true }, (err, doc) => {
         if (err) {
             res.status(response.BAD_REQUEST_400);
             res.json({
@@ -146,32 +175,32 @@ const updateACourse = (req: any, res: any) => {
  *  @param req - request object
  *  @param res - response object
  */
-const getCoursesByDepartmentId = (req: any, res: any)=>{
+const getCoursesByDepartmentId = (req: any, res: any) => {
     let id = req.params.id ? req.params.id : '';
-    let departId = req.params.departId ? req.params.departId: '';
+    let departId = req.params.departId ? req.params.departId : '';
     const options = {
         page: req.query.page ? req.query.page : 1,
         limit: req.query.limit ? req.query.limit : 10,
     };
-    console.log(departId+"");
-    courseModel.find({$or:[{departments:departId+""},{general:true}]}).populate("lecturers").exec((err,data)=>{
-        if(!err){
-                //    console.log(data)
-              res.status(response.OK_200);
-              res.json({
-                  success: true,
-                  docs: data
-              });
+    console.log(departId + "");
+    courseModel.find({ $or: [{ departments: departId + "" }, { general: true }] }).populate("lecturers").exec((err, data) => {
+        if (!err) {
+            //    console.log(data)
+            res.status(response.OK_200);
+            res.json({
+                success: true,
+                docs: data
+            });
         }
-        else{
-          res.status(response.BAD_REQUEST_400);
-                  console.log(err)
-                  res.json({
-                      success: false,
-                      docs: []
-                  })
+        else {
+            res.status(response.BAD_REQUEST_400);
+            console.log(err)
+            res.json({
+                success: false,
+                docs: []
+            })
         }
-      })
+    })
     // {lecturers:[departId]}
     // courseModel.find({$or:[{departments:departId+""},{general:true}]},(err,data)=>{
     //     if(!err){
@@ -210,7 +239,7 @@ const getCoursesByDepartmentId = (req: any, res: any)=>{
     //             })
     //   }
     // });
-  
+
 }
 
 /**
@@ -219,41 +248,41 @@ const getCoursesByDepartmentId = (req: any, res: any)=>{
  *  @param req - request object
  *  @param res - response object
  */
- const deletecourse = (req: any, res: any) => {
-  // setting the id of the course if passed to {id}
-  let id = req.params.id ? req.params.id : '';
- 
-  // deleting the course where {id} 
-  courseModel.deleteOne({ _id: id }).then(val => {
-      // course deleted
-      let docCount = val.deletedCount;
-      let responsMessage = docCount ? "Delleted document" : "Document Not found";
-      res.status(response.OK_200);
-      res.json({
-          success: true,
-          deletedCount: docCount,
-          message: responsMessage
-      })
-    
-  }).catch(err => {
-      // course not deleted
-      res.status(response.NO_CONTENT_204);
-      res.json({
-          success: false,
-          message: "Error occured"
-      })
-  })
+const deletecourse = (req: any, res: any) => {
+    // setting the id of the course if passed to {id}
+    let id = req.params.id ? req.params.id : '';
+
+    // deleting the course where {id} 
+    courseModel.deleteOne({ _id: id }).then(val => {
+        // course deleted
+        let docCount = val.deletedCount;
+        let responsMessage = docCount ? "Delleted document" : "Document Not found";
+        res.status(response.OK_200);
+        res.json({
+            success: true,
+            deletedCount: docCount,
+            message: responsMessage
+        })
+
+    }).catch(err => {
+        // course not deleted
+        res.status(response.NO_CONTENT_204);
+        res.json({
+            success: false,
+            message: "Error occured"
+        })
+    })
 
 };
 
 
 
 export default {
-  getCourses,
-  getCoursesById,
-  createCourse,
-  updateACourse,
-  deletecourse,
-  getCoursesByDepartmentId
+    getCourses,
+    getCoursesById,
+    createCourse,
+    updateACourse,
+    deletecourse,
+    getCoursesByDepartmentId
 };
 
