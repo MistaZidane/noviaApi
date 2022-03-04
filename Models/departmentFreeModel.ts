@@ -14,7 +14,7 @@ import paginator = require("mongoose-paginate-v2");
 
 const Schema = mongoose.Schema;
 const logsSchema = new Schema({
-    // semester+day+period
+    // semester+day+period+department
     state: { type: String, require: true },
     department: { type: String, require: true },
 });

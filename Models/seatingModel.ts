@@ -14,8 +14,10 @@ import paginator = require("mongoose-paginate-v2");
 
 const Schema = mongoose.Schema;
 const seatingSchema = new Schema({
-    name: { type: String, require: true },
-    table: {}
+    table: [],
+    semester:{ type: Schema.Types.ObjectId, ref: 'semester' },
+    campus:{ type: Schema.Types.ObjectId, ref: 'campus' },
+    department:{ type: Schema.Types.ObjectId, ref: 'department' },
 });
 
 seatingSchema.plugin(paginator);

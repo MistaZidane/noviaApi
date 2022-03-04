@@ -86,7 +86,7 @@ deleteCourseIndepartmentController: courseInDepartmentController.deleteCourseInD
 
    // for seating
    getSeatingController: seatingController.default.getSeating,
-   getSeatingByIdController: seatingController.default.getSeatingById,
+   getSeatingByIdsController: seatingController.default.getSeatingByIds,
    createSeatingControler: seatingController.default.createSeating,
    updateSeatingController: seatingController.default.updateSeating,
    deleteSeatingController: seatingController.default.deleteSeating, 

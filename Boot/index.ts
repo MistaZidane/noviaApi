@@ -43,7 +43,11 @@ const registerRoutes =  (routers: any): void  => {
     try {
         if (Object.keys(routers) && Object.keys(routers).length) {
             logger.info(`BOOT :: Registering routes started`);
+            // let i = 0;
             Object.keys(routers).forEach(key => {
+                // i++;
+                // console.log(key, "endpoint", i);
+                
                 app.use("/", routers[key]);
             });
             logger.info("BOOT :: Registering routes done");

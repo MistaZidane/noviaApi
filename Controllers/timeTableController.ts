@@ -16,6 +16,11 @@ import messages from "../messages/messages";
 import path from "path"
 import mongoosePaginate = require('mongoose-paginate-v2');
 import timeTable from "../Models/timeTableModel";
+import CourseInDepartmentModel from "../Models/courseInDepartmentDetailsModel";
+import departmentModel from "../Models/departmentsModel";
+
+import ClassModel from "../Models/ClassModel";
+import algo from "../algo";
 /**
  * 
  * used to create a TimeTable
@@ -23,19 +28,66 @@ import timeTable from "../Models/timeTableModel";
  *  @param res - response object
  */
 const createTimeTable = (req: any, res: any) => {
-    timeTable.create(req.body).then((data) => {
-        res.status(response.CREATED_201);
-        res.json({
-            success: true,
-            docs: data
-        });
-    }).catch(err => {
-        res.status(response.BAD_REQUEST_400);
-        res.json({
-            success: false,
-            docs: []
-        })
-    })
+    console.log("zidane is here");
+    // get departments by  campus Id
+    // get departmentsId to an array and use it below
+    let departMentIds = [];
+    departmentModel.find({campus:"622072cd5a1ffa64007b5cf2"}).populate('laboratories').populate("campus").exec((err,Departsdata)=>{
+        if(!err){
+            // console.log("department in campus",)
+            let newDepartData = JSON.parse(JSON.stringify(Departsdata));
+            newDepartData.forEach((elem:any)=>{
+                // console.log(elem._id);
+                elem.courses = [];
+                // console.log(elem);
+                
+                departMentIds.push(elem._id+"");
+                
+            });
+            // console.log(departMentIds,"oscocsocsofs");
+            CourseInDepartmentModel.find({$and:[{semester:"622073d65a1ffa64007b5d59"}, {"department": { $in:departMentIds}}]}).populate("course").populate("lecturer").exec((err,data)=>{
+                if(!err){
+                        //    console.log("courses in semester",JSON.stringify(data))
+                    // console.log("oka", data);
+                    // res.send(data);
+                    departMentIds.forEach((id:any, index:any)=>{
+                   
+                    let filteredArr =  data.filter((elem:any)=>{
+                        // console.log(elem);
+                        
+                            return elem.department == id;
+                        });
+                        newDepartData[index].courses = filteredArr;
+                        // console.log( newDepartData[index].courses,"test");
+                       
+                        
+                        
+                    });
+
+             
+                    
+            res.send(newDepartData);
+            // getting classes n its campus
+                    ClassModel.find({campusId:"622072cd5a1ffa64007b5cf2"},(classEror,classData)=>{
+                        // console.log(classData,"campus");
+                        console.log(algo.generateClasroomsTableForACampus(classData,newDepartData));
+                        ;
+                    })
+                }
+                else{
+                    console.log(err);
+                    
+                }
+            
+              });
+        }
+        else{
+          res.status(response.BAD_REQUEST_400);
+                  console.log(err)
+                
+        }
+      });
+
 
 };
 

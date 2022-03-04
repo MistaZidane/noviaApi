@@ -17,11 +17,12 @@ const CourseSchema = new Schema({
     course: { type:Schema.Types.ObjectId, ref:'courses' },
     semester: { type: String },
     department: {type: String,require:true},
-    lecturer: {type:String, require:true},
+    lecturer: {type:Schema.Types.ObjectId, ref:'lecturer'},
     totHours: {type: Number, require:true},
     needsLab: {type: Boolean, default:false},
-    day: {type: String, require:true},
-    period: [{type: String, require:true}],
+    days: [{type: String, require:true}],
+    ready: {type: Boolean, default: false},
+    periods: [{type: String, require:true}],
 });
 
 CourseSchema.plugin(paginator);

@@ -124,6 +124,8 @@ const updateCourseInDepartment = (req: any, res: any) => {
     let id = req.params.id ? req.params.id : '';
 
     let updateData = req.body;
+    console.log("here", updateData);
+    
     CourseInDepartmentModel.findOneAndUpdate({ _id: id}, updateData, { new: true }, (err, doc) => {
         if (err) {
             res.status(response.BAD_REQUEST_400);

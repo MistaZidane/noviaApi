@@ -16,6 +16,10 @@ import messages from "../messages/messages";
 import path from "path"
 import mongoosePaginate = require('mongoose-paginate-v2');
 import seatingModel from "../Models/seatingModel";
+import CourseInDepartmentModel from "../Models/courseInDepartmentDetailsModel";
+import departmentModel from "../Models/departmentsModel";
+import ClassModel from "../Models/ClassModel";
+import algo from "../algo";
 /**
  * 
  * used to create a Seating
@@ -23,19 +27,87 @@ import seatingModel from "../Models/seatingModel";
  *  @param res - response object
  */
 const createSeating = (req: any, res: any) => {
-    seatingModel.create(req.body).then((data) => {
-        res.status(response.CREATED_201);
-        res.json({
-            success: true,
-            docs: data
-        });
-    }).catch(err => {
-        res.status(response.BAD_REQUEST_400);
-        res.json({
-            success: false,
-            docs: []
-        })
-    })
+    let campusId = req.params.campusId ? req.params.campusId : '';
+    let semesterId = req.params.semesterId ? req.params.semesterId : '';
+    console.log(campusId, semesterId);
+    // get departments by  campus Id
+    // get departmentsId to an array and use it below
+    let departMentIds = [];
+    departmentModel.find({campus:campusId}).populate('laboratories').populate("campus").exec((err,Departsdata)=>{
+        if(!err){
+            // console.log("department in campus",)
+            let newDepartData = JSON.parse(JSON.stringify(Departsdata));
+            newDepartData.forEach((elem:any)=>{
+                // console.log(elem._id);
+                elem.courses = [];
+                // console.log(elem);
+                
+                departMentIds.push(elem._id+"");
+                
+            });
+            // console.log(departMentIds,"oscocsocsofs");
+            CourseInDepartmentModel.find({$and:[{semester:semesterId}, {"department": { $in:departMentIds}}]}).populate("course").populate("lecturer").exec((err,data)=>{
+                if(!err){
+                        //    console.log("courses in semester",JSON.stringify(data))
+                    // console.log("oka", data);
+                    // res.send(data);
+                    departMentIds.forEach((id:any, index:any)=>{
+                   
+                    let filteredArr =  data.filter((elem:any)=>{
+                        // console.log(elem);
+                        
+                            return elem.department == id;
+                        });
+                        newDepartData[index].courses = filteredArr;
+                        // console.log( newDepartData[index].courses,"test");
+                       
+                        
+                        
+                    });
+
+             
+                    
+            
+            // getting classes n its campus
+                    ClassModel.find({campusId:"622072cd5a1ffa64007b5cf2"},(classEror,classData)=>{
+                        // console.log(classData,"campus");
+                       
+                let data =   algo.generateClasroomsTableForACampus(classData,newDepartData);
+                        res.json({
+                            success: true,
+                            docs: data
+                        });
+                        ;
+                    })
+                }
+                else{
+                    console.log(err);
+                    
+                }
+            
+              });
+        }
+        else{
+          res.status(response.BAD_REQUEST_400);
+                  console.log(err)
+                
+        }
+      });
+
+
+    // seatingModel.create(req.body).then((data) => {
+    //     res.status(response.CREATED_201);
+    //     res.json({
+    //         success: true,
+    //         docs: data
+    //     });
+    // }).catch(err => {
+    //     res.status(response.BAD_REQUEST_400);
+    //     res.json({
+    //         success: false,
+    //         docs: []
+    //     })
+    // })
 
 };
 
@@ -100,7 +172,7 @@ const getSeating = (req: any, res: any) => {
  *  @param res - response object
  */
 // 603eb2ee77259abd63745b4d
-const getSeatingById = (req: any, res: any) => {
+const getSeatingByIds = (req: any, res: any) => {
   let id = req.params.id ? req.params.id : '';
   const options = {
       page: req.query.page ? req.query.page : 1,
@@ -193,7 +265,7 @@ const updateSeating = (req: any, res: any) => {
 
 export default {
   getSeating,
-  getSeatingById,
+  getSeatingByIds,
   createSeating,
   updateSeating,
   deleteSeating

@@ -19,7 +19,9 @@ const Schema = mongoose.Schema;
 const ClassSchema =new Schema({
     size: {type: Number, require:true},
     name: {type: String, require:true, unique:true},
-    campusId: {type:String, require: true}
+    campusId: {type:String, require: true},
+    isLab: {type:Boolean, require: true, default: false},
+    departments: [ {type:String}]
 });
 
 

@@ -16,7 +16,7 @@ import messages from "../messages/messages";
 import path from "path"
 import mongoosePaginate = require('mongoose-paginate-v2');
 import ClassModel from "../Models/ClassModel";
-
+import departmentsModel from "../Models/departmentsModel";
 /**
  * 
  * used to create a Class
@@ -24,12 +24,25 @@ import ClassModel from "../Models/ClassModel";
  *  @param res - response object
  */
 const createClass = (req: any, res: any) => {
+    let departments = req.body.departments;
+  
     ClassModel.create(req.body).then((data) => {
+        // adding a lab to a department
+               departments.forEach((element:any) => {
+            console.log(element);
+            departmentsModel.findByIdAndUpdate(element,{$push:{laboratories:data._id}},{},(departRrr:any, DepartData)=>{
+                
+            })
+        });
+       
+       
         res.status(response.CREATED_201);
         res.json({
             success: true,
             docs: data
-        });
+        }); 
+    
+    
     }).catch(err => {
         res.status(response.OK_200);
         res.json({

@@ -41,8 +41,9 @@ const createCourse = (req: any, res: any) => {
                 department: element,
                 totHours: 10,
                 needsLab: false,
-                day: "MONDAY",
-                period: 1,
+                ready:false,
+                days: ["MONDAY"],
+                periods: [1],
     
             }
             departmentCourseData.push(obj)

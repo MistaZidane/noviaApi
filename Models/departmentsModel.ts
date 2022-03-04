@@ -28,7 +28,7 @@ const DepartmentCourseSchema =new Schema({
 
 const DepartmentSchema = new Schema({
     name: { type: String, unique: true, require: true },
-    laboratories: [],
+    laboratories: [{ type: Schema.Types.ObjectId, ref: 'classes' }],
     size: { type: Number, require: true },
     campus: { type: Schema.Types.ObjectId,  require: true, ref: 'campus' },
     daysAndCoursedToHave: [],
