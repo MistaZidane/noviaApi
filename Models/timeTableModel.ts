@@ -15,6 +15,8 @@ import paginator = require("mongoose-paginate-v2");
 const Schema = mongoose.Schema;
 const TimeTableSchema = new Schema({
     name: { type: String, unique: true, require: true },
+    semester:{ type: Schema.Types.ObjectId, ref: 'semester' },
+    campus:{ type: Schema.Types.ObjectId, ref: 'campus' },
     department: { type: Schema.Types.ObjectId,  require: true, ref: 'departments',unique: true, },
     table: [],
     

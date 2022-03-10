@@ -57,7 +57,7 @@ const registerRoutes =  (routers: any): void  => {
     }
 };
     registerRoutes(allRouter ? allRouter : {});
-    app.listen(8000, () => {
+    app.listen(8001, () => {
         // CONNECTING TO DATABASE
         mongo().once('open', () => {
     logger.info("BOOT :: ", messages.DATABASE_SUCCESS);

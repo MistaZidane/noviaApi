@@ -19,7 +19,7 @@ import authMiddleware from "../middlewares/index";
 const router = express.Router();
 
 router.get("/table/",authMiddleware.authJwt.default.verifyToken, controller.getTimeTableController);
-router.get("/table/:id",authMiddleware.authJwt.default.verifyToken, controller.getTimeTableByIdController);
+router.get("/table/:semesterId/:departmentId",authMiddleware.authJwt.default.verifyToken, controller.getTimeTableByIdController);
 router.post("/table/",authMiddleware.authJwt.default.verifyToken, controller.createTimeTableControler);
 router.patch("/table/:id",authMiddleware.authJwt.default.verifyToken, controller.updateTimeTableController);
 router.delete("/table/:id",authMiddleware.authJwt.default.verifyToken, controller.deleteTimeTableController);

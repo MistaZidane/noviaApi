@@ -127,49 +127,117 @@ let campus = [{
 ];
 
 
-function generateTimeTable(departMents: any) {
+let  generateTimeTable = (departMents: any, semesterId:any, campusId:any) =>{
+    // console.log(departMents,"ok");
+    departMents.forEach((department:any) => {
+        department.daysAndCoursedToHave = [
+            { day: "Monday", courses: [] },
+            { day: "Tuesday", courses: [] },
+            { day: "Wednesday", courses: [] },
+            { day: "Thursday", courses: [] },
+            { day: "Friday", courses: [] },
+            { day: "Saturday", courses: [] },
+        ]
+        department.courses.forEach((element:any) => {
+            console.log(element, "ellellllellele");
+            
+            element.days.forEach((day:any) => {
+                if(day == "Monday"){
+                    department.daysAndCoursedToHave[0].courses.push(element.course.title)
+                }
+                else if(day == "Tuesday"){
+                    department.daysAndCoursedToHave[1].courses.push(element.course.title)
+                }
+                else if(day == "Wednesday"){
+                    department.daysAndCoursedToHave[2].courses.push(element.course.title)
+                }
+                else if(day == "Thursday"){
+                    department.daysAndCoursedToHave[3].courses.push(element.course.title)
+                }
+                else if(day == "Friday"){
+                    department.daysAndCoursedToHave[4].courses.push(element.course.title)
+                }
+                else if(day == "Saturday"){
+                    department.daysAndCoursedToHave[5].courses.push(element.course.title)
+                }
+            });
+           
+            
+        });
+    });
+    // console.log(departMents,"ok");
     let departmentOutputTable: any = { table: [] }
-
+ 
     let output = []
 
-    for (let i = 0; i < departments.length; i++) {
+    for (let i = 0; i < departMents.length; i++) {
+        let mainOut:any = {
+            firstPeriod:[],
+            secPeriod:[],
+            thirdPeriod:[],
+            fourthPeriod:[]
+        }
         let timeTable = []
-        let current = departments[i];
+        let current = departMents[i];
         departmentOutputTable.name = current.name;
-        // console.log(departmentOutputTable.name,' first');
+        console.log(current.daysAndCoursedToHave,' first',i);
         // departmentOutputTable.table.push({day: current. })
         current.daysAndCoursedToHave.forEach((day) => {
-            // console.log(day);
+            console.log(day,"dayyyyyy");
+            let timeTableForDay = {
+                day: day.day,
+                dayIndex: daysInweek.indexOf(day.day)+1,
+                // time: [],
+                course: '',
+                lecturer: ''
+            }
             day.courses.forEach((dayCourse) => {
-                // console.log(dayCourse)
+                console.log(dayCourse)
                 current.courses.forEach((course) => {
-                    if (dayCourse == course.title) {
-                        //    console.log(true);
-                        let timeTableForDay = {
-                            day: day.day,
-                            time: [],
-                            course: course.title,
-                            lecturer: course.lecturer
-                        }
+                    if (dayCourse == course.course.title) {
+                        
+                        timeTableForDay.course = course.course.title,
+                        timeTableForDay.lecturer =course.lecturer.name
 
                         // timeTableForDay.time.push(timeFromPeriodArray[period-1].time)
                         course.periods.forEach((period) => {
-                            timeTableForDay.time.push(timeFromPeriodArray[period - 1].time)
+                            // console.log(period,"period");
+                            
+                            if(period == "1"){
+                                mainOut.firstPeriod.push(timeTableForDay)
+                            }
+                            else if(period == "2"){
+                                mainOut.secPeriod.push(timeTableForDay)
+                            }
+                            else if(period == "3"){
+                                mainOut.thirdPeriod.push(timeTableForDay)
+                            }
+                            else if(period == "4"){
+                                mainOut.fourthPeriod.push(timeTableForDay)
+                            }
+                            // timeTableForDay.time.push(timeFromPeriodArray[period - 1].time)
                         })
-                        timeTable.push(timeTableForDay);
+                        // timeTable.push(timeTableForDay);
+
+
+                    }
+                    else{
 
                     }
 
                 })
             })
-            departmentOutputTable.table = timeTable;
+            departmentOutputTable.table = mainOut;
             departmentOutputTable.name = current.name;
 
         })
 
-        output.push({ name: departmentOutputTable.name, table: departmentOutputTable.table })
+        output.push({ name: departmentOutputTable.name, table: departmentOutputTable.table, semester:semesterId, campus:campusId, department:current._id })
 
     }
+//     console.log("*******************************\n");
+    
+// console.log(JSON.stringify(output),"okay na");
 
     return output;
 }
@@ -179,7 +247,7 @@ function generateTimeTable(departMents: any) {
 
 
 
-let generateClasroomsTableForACampus = (campusClasses: any, departments: any) => {
+let generateClasroomsTableForACampus = (campusClasses: any, departments: any, semesterId:any, campusId:any) => {
     let output = {};
     let outputArray = [];
     let outputUnassignedDepartments = [];
@@ -210,7 +278,7 @@ let generateClasroomsTableForACampus = (campusClasses: any, departments: any) =>
 
     selectedDepartments.forEach((currentDepartment, index) => {
         // sending department name to output array
-        outputArray.push({ name: currentDepartment.name, table: {} })
+        outputArray.push({department: currentDepartment._id, name: currentDepartment.name, table: {}, semester:semesterId, campus:campusId })
         // getting a course in a list of courses in a department
         currentDepartment.courses.forEach((course:any) => {
           
@@ -649,5 +717,6 @@ Afternoon
 
 // generateClasroomsTableForACampus('Campus B');
 export default {
-    generateClasroomsTableForACampus
+    generateClasroomsTableForACampus,
+    generateTimeTable
 }

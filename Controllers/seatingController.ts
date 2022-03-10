@@ -16,6 +16,7 @@ import messages from "../messages/messages";
 import path from "path"
 import mongoosePaginate = require('mongoose-paginate-v2');
 import seatingModel from "../Models/seatingModel";
+import timeTableModel from "../Models/timeTableModel";
 import CourseInDepartmentModel from "../Models/courseInDepartmentDetailsModel";
 import departmentModel from "../Models/departmentsModel";
 import ClassModel from "../Models/ClassModel";
@@ -65,15 +66,30 @@ const createSeating = (req: any, res: any) => {
                         
                     });
 
-             
-                    
-            
             // getting classes n its campus
-                    ClassModel.find({campusId:"622072cd5a1ffa64007b5cf2"},(classEror,classData)=>{
+                    ClassModel.find({campusId:campusId},(classEror,classData)=>{
                         // console.log(classData,"campus");
                        
-                let data =   algo.generateClasroomsTableForACampus(classData,newDepartData);
-                        res.json({
+                let seatingTable:any =   algo.generateClasroomsTableForACampus(classData,newDepartData, semesterId, campusId);
+                seatingTable.forEach(element => {
+                    seatingModel.findOneAndUpdate({department:element.department, semester:element.semester}, element,{upsert:true},(sErorr:any,sData:any)=>{
+ 
+                    })
+                 // console.log(element);
+                 
+                });
+
+              let timeTable:any = algo.generateTimeTable(newDepartData,semesterId, campusId);
+              timeTable.forEach((element:any) => {
+                timeTableModel.findOneAndUpdate({department:element.department, semester:element.semester}, element,{upsert:true},(sErorr:any,sData:any)=>{
+                   
+                })
+        
+             
+            });
+
+            
+                res.json({
                             success: true,
                             docs: data
                         });
@@ -120,13 +136,15 @@ const createSeating = (req: any, res: any) => {
  */
 // 603eb2ee77259abd63745b4d
 const getSeating = (req: any, res: any) => {
+    console.log("**************************************");
+    let semesterId = req.params.semesterId ? req.params.semesterId : '';
     const options = {
         page: req.query.page ? req.query.page : 1,
         limit: req.query.limit ? req.query.limit : 10,
     };
-    seatingModel.find().populate('department').exec((err,data)=>{
+    seatingModel.find({semester:semesterId}).populate('department').exec((err,data)=>{
         if(!err){
-                   console.log(data)
+                   console.log(data.length)
               res.status(response.OK_200);
               res.json({
                   success: true,
@@ -173,15 +191,17 @@ const getSeating = (req: any, res: any) => {
  */
 // 603eb2ee77259abd63745b4d
 const getSeatingByIds = (req: any, res: any) => {
-  let id = req.params.id ? req.params.id : '';
+    let departmentId = req.params.departmentId ? req.params.departmentId : '';
+    let semesterId = req.params.semesterId ? req.params.semesterId : '';
+
   const options = {
       page: req.query.page ? req.query.page : 1,
       limit: req.query.limit ? req.query.limit : 10,
   };
   
-  seatingModel.findById(id,(err,data)=>{
+  seatingModel.find({department: departmentId, semester:semesterId}).populate("department").exec((err,data)=>{
     if(!err){
-               console.log(data)
+            //    console.log(data)
           res.status(response.OK_200);
           res.json({
               success: true,

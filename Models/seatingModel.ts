@@ -17,7 +17,7 @@ const seatingSchema = new Schema({
     table: [],
     semester:{ type: Schema.Types.ObjectId, ref: 'semester' },
     campus:{ type: Schema.Types.ObjectId, ref: 'campus' },
-    department:{ type: Schema.Types.ObjectId, ref: 'department' },
+    department:{ type: Schema.Types.ObjectId, ref: 'departments' },
 });
 
 seatingSchema.plugin(paginator);

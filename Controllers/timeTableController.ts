@@ -28,7 +28,8 @@ import algo from "../algo";
  *  @param res - response object
  */
 const createTimeTable = (req: any, res: any) => {
-    console.log("zidane is here");
+    let campusId = req.params.campusId ? req.params.campusId : '';
+    let semesterId = req.params.semesterId ? req.params.semesterId : '';
     // get departments by  campus Id
     // get departmentsId to an array and use it below
     let departMentIds = [];
@@ -70,7 +71,7 @@ const createTimeTable = (req: any, res: any) => {
             // getting classes n its campus
                     ClassModel.find({campusId:"622072cd5a1ffa64007b5cf2"},(classEror,classData)=>{
                         // console.log(classData,"campus");
-                        console.log(algo.generateClasroomsTableForACampus(classData,newDepartData));
+                        console.log(algo.generateClasroomsTableForACampus(classData,newDepartData, semesterId, campusId));
                         ;
                     })
                 }
@@ -154,12 +155,14 @@ const getTimeTables = (req: any, res: any) => {
 // 603eb2ee77259abd63745b4d
 const getTimeTableById = (req: any, res: any) => {
   let id = req.params.id ? req.params.id : '';
+  let departmentId = req.params.departmentId ? req.params.departmentId : '';
+  let semesterId = req.params.semesterId ? req.params.semesterId : '';
   const options = {
       page: req.query.page ? req.query.page : 1,
       limit: req.query.limit ? req.query.limit : 10,
   };
   
-  timeTable.findById(id,(err,data)=>{
+  timeTable.find({semester:semesterId, department:departmentId},(err,data)=>{
     if(!err){
                console.log(data)
           res.status(response.OK_200);
