@@ -25,7 +25,7 @@ import courseIndepartmentRoute from "./courseInDepartmentRoute"
 import classFreeStateRoute from "./classFreeStateRoute";
 import lecturerFreeStateRoute from "./lecturerFreeStateRoute";
 import DepartmentFreeStateRoute from "./departmentFreeStateRoute";
-
+import OpenRoutes from "./openRoutes"
 
 export default {
 
@@ -44,6 +44,7 @@ export default {
     courseIndepartmentRoute,
     classFreeStateRoute,
     lecturerFreeStateRoute,
-    DepartmentFreeStateRoute
+    DepartmentFreeStateRoute,
+    OpenRoutes
       
 }
