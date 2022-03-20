@@ -105,7 +105,7 @@ const getTimeTables = (req: any, res: any) => {
         page: req.query.page ? req.query.page : 1,
         limit: req.query.limit ? req.query.limit : 10,
     };
-    timeTable.find().populate('department').exec((err,data)=>{
+    timeTable.find().populate('department').populate('semester').exec((err,data)=>{
         if(!err){
                    console.log(data)
               res.status(response.OK_200);

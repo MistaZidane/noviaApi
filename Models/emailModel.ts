@@ -15,7 +15,6 @@ import paginator = require("mongoose-paginate-v2");
 const Schema = mongoose.Schema;
 const EmailSchema = new Schema({
     email: { type: String, unique: true },
-    campusId: {type: String},
     lecturer: {type:Boolean, default: false},
     departmentId: {type: String},
     

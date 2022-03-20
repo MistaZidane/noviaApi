@@ -24,13 +24,25 @@ import mailer from "../Utils/mailer";
  *  @param res - response object
  */
 const createEmail = (req: any, res: any) => {
-    emailModel.create(req.body).then((data) => {
+  let emails =  req.body.emails.split(',');
+  console.log(req.body.emails,"sssss");
+  
+    let data = [];
+    emails.forEach((email:any) => {
+        data.push({email:email, departmentId: req.body.department,lecturer:req.body.lecturer })
+    });
+
+    emailModel.insertMany(data).then((resData) => {
         res.status(response.CREATED_201);
+        console.log(resData);
+        
         res.json({
             success: true,
-            docs: data
+            docs: resData
         });
     }).catch(err => {
+        console.log(err);
+        
         res.status(response.BAD_REQUEST_400);
         res.json({
             success: false,
@@ -206,38 +218,33 @@ const updateEmail = (req: any, res: any) => {
 // 603eb2ee77259abd63745b4d
 const sendAEmails = (req: any, res: any) => {
     const query = {
-        lecturer: "",
+        lecturer: true,
         departmentId:"",
-        campusId:''
 
 }
 // setting only data that comes through
-console.log(req.body.to.lecturers);
+// console.log(req.body,"body");
 
-if(req.body.to.department){
-    query.departmentId = req.body.to.department;
-}
-else{
+if(req.body.department == 'all'){
     delete query.departmentId;
 }
-if(req.body.to.lecturers){
-    query.lecturer = req.body.to.lecturers;
-}
 else{
-    delete query.lecturer;
+    query.departmentId = req.body.department;
 }
-if(req.body.to.campusId){
-    query.campusId = req.body.to.campusId;
+
+
+if(req.body.lecturer == false ){
+   query.lecturer = false;
 }
-else{
-    delete query.campusId;
-}
-console.log(query, "asxsc");
+
+// console.log(query,"quere");
+
+
 
 let emailQuery = emailModel.find(query).select('email -_id')
 emailQuery.exec((err,data)=>{
       if(!err){
-          console.log(data);
+          console.log(data,"data");
           
           mailer.mailer(req,res, data);
       }
@@ -251,8 +258,7 @@ emailQuery.exec((err,data)=>{
       }
     });
 
-   
-  
+
   
   };
 

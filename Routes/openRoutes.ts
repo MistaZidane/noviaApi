@@ -24,5 +24,7 @@ router.get("/open/table/:semesterId/:departmentId", controller.getTimeTableByIdC
 router.get("/open/seating/:semesterId",controller.getSeatingController);
 router.get("/open/seating/:semesterId/:departmentId",controller.getSeatingByIdsController);
 // router.get("/open/seating", controller.getLogController);
+router.get("/open/department/", controller.getDepartmentController);
+router.get("/open/semester/",controller.getSemestersController);
 
 export default router;
