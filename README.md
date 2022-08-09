@@ -6,7 +6,6 @@
 This project is currently in development. The scheduling algorithm is already implemented. Admin can add classrooms, lecturers, campuses and courses.
 
 
-
 #### Example:   
 
 [ PRETEND SCREEN SHOT IS HERE ]
@@ -41,5 +40,5 @@ To Visit Api:
   - Also  setup the  [Novia for students](https://github.com/MistaZidane/novia-open) admin dashboard ?)
 ## Database
   - Mongo DB 
-  -
+  
 ### Madd with ❤️ from Cameroon 
