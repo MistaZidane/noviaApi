@@ -30,19 +30,6 @@ const verifyToken = (req, res, next) => {
     return res.status(403).send({ message: "No token provided!", auth:false  });
   }
 
-  // if (!token) {
-    
-  // }
-
-  // jwt.verify(token, config.secret, (err, decoded) => {
-  //   if (err) {
-  //     return res.status(401).send({ message: "Unauthorized!", auth:false });
-  //   }
-  //   req.userId = decoded.id;
-  //   console.log("authenticated");
-    
-  //   next();
-  // });
 };
 
 export default {verifyToken} ;

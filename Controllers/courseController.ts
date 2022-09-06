@@ -183,10 +183,10 @@ const getCoursesByDepartmentId = (req: any, res: any) => {
         page: req.query.page ? req.query.page : 1,
         limit: req.query.limit ? req.query.limit : 10,
     };
-    console.log(departId + "");
-    courseModel.find({ $or: [{ departments: departId + "" }, { general: true }] }).populate("lecturers").exec((err, data) => {
+    console.log(departId + "************************************************ i am here");
+    courseModel.find({ $or: [{ "departments": departId }, { "general": true }] }).populate("lecturers").exec((err, data) => {
         if (!err) {
-            //    console.log(data)
+               console.log(data)
             res.status(response.OK_200);
             res.json({
                 success: true,
@@ -195,7 +195,7 @@ const getCoursesByDepartmentId = (req: any, res: any) => {
         }
         else {
             res.status(response.BAD_REQUEST_400);
-            console.log(err)
+            console.log(err, "********************** an error")
             res.json({
                 success: false,
                 docs: []

@@ -16,6 +16,8 @@ import messages from "../messages/messages";
 import path from "path"
 import mongoosePaginate = require('mongoose-paginate-v2');
 import departmentModel from "../Models/departmentsModel";
+import courseModel from "../models/courseModel";
+import CourseInDepartmentModel from "../Models/courseInDepartmentDetailsModel";
 /**
  * 
  * used to create a department
@@ -25,10 +27,46 @@ import departmentModel from "../Models/departmentsModel";
 const createDepartment = (req: any, res: any) => {
     departmentModel.create(req.body).then((data) => {
         res.status(response.CREATED_201);
-        res.json({
-            success: true,
-            docs: data
+courseModel.find({general:true},(er:any,rData:any)=>{
+    let dataGotten = JSON.parse(JSON.stringify(rData));
+    let dataTobeSaved:any = [];
+    dataGotten.forEach((element:any) => {
+        // console.log(element,"eleelellelelele");
+        let obj:any = {}
+            obj['lecturer']= element.lecturers[0]
+            obj['needsLab']=  false;
+            obj['periods']=  ['1'];
+            obj['semester']=  '';
+            obj['totHours']=  10;
+            obj['ready']=  false;
+            obj['department']=  data._id;
+            obj['days']=  [""];
+            obj['course']=  element ;
+            // delete element['_id']
+            dataTobeSaved.push(obj);
         });
+        console.log(dataTobeSaved, 'to be saved');
+        
+         CourseInDepartmentModel.insertMany(dataTobeSaved, {}).then((resdata:any)=>{
+            console.log(resdata,"res dataa");
+            
+            res.json({
+                success: true,
+                docs: data
+            })
+     
+         }).catch(anErr=>{
+            console.log(anErr,"errorrrrr");
+            
+            res.json({
+                success: false,
+                docs: []
+            })
+         })
+})
+       
+     
+      
     }).catch(err => {
         res.status(response.BAD_REQUEST_400);
         res.json({

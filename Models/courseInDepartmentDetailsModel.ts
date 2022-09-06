@@ -13,7 +13,7 @@ import mongoose = require("mongoose");
 import paginator = require("mongoose-paginate-v2");
 
 const Schema = mongoose.Schema;
-const CourseSchema = new Schema({
+const CourseIndepartmentSchema = new Schema({
     course: { type:Schema.Types.ObjectId, ref:'courses' },
     semester: { type: String },
     department: {type: String,require:true},
@@ -25,5 +25,5 @@ const CourseSchema = new Schema({
     periods: [{type: String, require:true}],
 });
 
-CourseSchema.plugin(paginator);
-export default mongoose.model('courseInDepartment', CourseSchema);
+CourseIndepartmentSchema.plugin(paginator);
+export default mongoose.model('courseInDepartment', CourseIndepartmentSchema);
